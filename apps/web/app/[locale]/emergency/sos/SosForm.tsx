@@ -12,7 +12,8 @@ import {
   TextField,
 } from "@/components/form/Fields";
 import { Link } from "@/i18n/navigation";
-import { postSos } from "@/lib/api";
+import { submitSosOrQueue } from "@/lib/offlineQueue";
+import SosQueuedNotice from "@/components/SosQueuedNotice";
 import type { SosResponse, SosSituationCategory } from "@/lib/types";
 
 const SITUATIONS: SosSituationCategory[] = [
@@ -39,6 +40,7 @@ export function SosForm() {
   const [consentError, setConsentError] = useState<string | undefined>();
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<SosResponse | null>(null);
+  const [queued, setQueued] = useState<{ id: string; queuedAt: string } | null>(null);
 
   function requestLocation() {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -70,7 +72,7 @@ export function SosForm() {
     }
 
     setSubmitting(true);
-    const response = await postSos({
+    const response = await submitSosOrQueue({
       reporter_name: name || null,
       reporter_phone: phone || null,
       situation_category: situation,
@@ -81,11 +83,19 @@ export function SosForm() {
     });
     setSubmitting(false);
 
-    if (response.ok) {
+    if (response.ok && !response.queued) {
       setResult(response.data);
       return;
     }
-    setErrors([response.status ? response.error : tf("networkError")]);
+    if (response.ok && response.queued) {
+      setQueued({ id: response.id, queuedAt: response.queuedAt });
+      return;
+    }
+    setErrors([response.error]);
+  }
+
+  if (queued) {
+    return <SosQueuedNotice id={queued.id} queuedAt={queued.queuedAt} />;
   }
 
   if (result) {

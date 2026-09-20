@@ -177,6 +177,11 @@ class LostFoundAdminOut(ORMModel):
     reporter_phone: str
     status: str
     admin_notes: str | None = None
+    #: Set only via POST /api/v1/lost-found/{id}/confirm-match - never
+    #: written by the candidate-match scorer on its own (PRD section 16).
+    #: Admin-only: this is a database id of another case, same reasoning as
+    #: LostFoundPublicOut never exposing `id` - see the module docstring.
+    matched_case_id: int | None = None
     created_at: UtcDateTime
     updated_at: UtcDateTime
 
@@ -217,3 +222,31 @@ class CaseStatusUpdate(BaseModel):
 
     status: str
     admin_notes: str | None = Field(default=None, max_length=2000)
+
+
+# --------------------------------------------------------------------------
+# Lost & Found candidate matching (PRD section 16)
+#
+# THE HEURISTIC IN app/services/lost_found_matching.py IS NOT MACHINE
+# LEARNING - see that module's docstring. Nothing here links or closes a
+# case; GET .../candidate-matches only surfaces scored suggestions for a
+# human reviewer, and POST .../confirm-match is the one place two cases are
+# ever actually linked, always by an explicit admin action.
+# --------------------------------------------------------------------------
+class LostFoundCandidateMatchOut(BaseModel):
+    """One scored, opposite-type candidate. Never persisted."""
+
+    id: int
+    case_reference: str
+    report_type: str
+    category: str
+    status: str
+    score: float
+    reasons: list[str]
+    created_at: UtcDateTime
+
+
+class LostFoundConfirmMatchRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    matched_case_id: int

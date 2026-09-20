@@ -263,7 +263,330 @@ export interface LoginResponse {
   user: AuthUser;
 }
 
-export type AdminEntityKey = "events" | "announcements" | "temples" | "ghats";
+export type AdminEntityKey =
+  | "events"
+  | "announcements"
+  | "temples"
+  | "ghats"
+  | "parking"
+  | "accommodation"
+  | "essential_services";
 
 /** Admin list rows are the public shapes plus drafts, so they reuse the types above. */
-export type AdminRecord = EventItem | Announcement | Temple | Ghat;
+export type AdminRecord =
+  | EventItem
+  | Announcement
+  | Temple
+  | Ghat
+  | ParkingFacility
+  | Accommodation
+  | EssentialService;
+
+/** §10 Pilgrimage Planner (Sprint 2 addendum) */
+export type TransportMode = "car" | "bus" | "train" | "walking" | "other";
+export type AccommodationPreference =
+  | "budget"
+  | "mid_range"
+  | "premium"
+  | "dharamshala"
+  | "not_needed";
+export type AgeGroup = "infant" | "child" | "adult" | "senior";
+export type PilgrimInterest =
+  | "spiritual"
+  | "cultural"
+  | "historical"
+  | "family_friendly"
+  | "photography";
+export type AccessibilityRequirement =
+  | "wheelchair"
+  | "visual_impairment"
+  | "hearing_impairment"
+  | "elderly_mobility";
+
+export interface PlannerRequest {
+  arrival_date: string;
+  departure_date: string;
+  party_size: number;
+  age_groups: AgeGroup[];
+  transport_mode: TransportMode;
+  accommodation_preference: AccommodationPreference;
+  interests: PilgrimInterest[];
+  accessibility_requirements: AccessibilityRequirement[];
+}
+
+export interface PlannerTempleSummary {
+  id: number;
+  slug: string;
+  name: string;
+  short_description: string | null;
+}
+
+export interface PlannerGhatSummary {
+  id: number;
+  slug: string;
+  name: string;
+}
+
+export interface PlannerEventSummary {
+  id: number;
+  slug: string;
+  title: string;
+  category: EventCategory;
+  starts_at: string;
+  venue_name: string | null;
+}
+
+export interface PlannerDay {
+  date: string;
+  day_number: number;
+  temples: PlannerTempleSummary[];
+  ghats: PlannerGhatSummary[];
+  events: PlannerEventSummary[];
+  rest_period: boolean;
+}
+
+/** Stateless — nothing here is persisted, so there is no reference/id to save. */
+export interface PlannerResponse {
+  arrival_date: string;
+  departure_date: string;
+  party_size: number;
+  age_groups: AgeGroup[];
+  transport_mode: TransportMode;
+  accommodation_preference: AccommodationPreference;
+  interests: PilgrimInterest[];
+  accessibility_requirements: AccessibilityRequirement[];
+  days: PlannerDay[];
+  unscheduled_temples: PlannerTempleSummary[];
+  unscheduled_ghats: PlannerGhatSummary[];
+  transport_note: string;
+  accommodation_note: string;
+  accessibility_note: string | null;
+  interest_note: string | null;
+  data_source: "generated";
+  prototype_notice: string;
+  generated_at: string;
+}
+
+/** §11 Parking (PRD §12, roadmap 2.3) */
+export type ParkingType = "bus" | "two_wheeler" | "four_wheeler" | "accessible";
+
+export interface ParkingFacility {
+  id: number;
+  slug: string;
+  name: string;
+  parking_type: ParkingType;
+  capacity: number | null;
+  current_occupancy: number | null;
+  occupancy_updated_at: string | null;
+  entry_info: string | null;
+  exit_info: string | null;
+  shuttle_note: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  zone_id: number | null;
+  status: PublicationStatus;
+  data_source: DataSource;
+  updated_at: string;
+}
+
+export interface ParkingAvailability {
+  parking_id: number;
+  slug: string;
+  name: string;
+  parking_type: ParkingType;
+  capacity: number | null;
+  current_occupancy: number | null;
+  occupancy_updated_at: string | null;
+  data_source: DataSource;
+  prototype_notice: string;
+  updated_at: string;
+}
+
+/** §12 Accommodation & essential services (PRD §17, roadmap 2.5) */
+export type AccommodationType =
+  | "hotel"
+  | "dharamshala"
+  | "ashram"
+  | "tent_camp"
+  | "government";
+export type AccommodationPriceTier = "budget" | "mid_range" | "premium";
+export type EssentialServiceCategory =
+  | "food_service"
+  | "bhandara"
+  | "drinking_water"
+  | "toilet"
+  | "changing_facility";
+
+export interface Accommodation {
+  id: number;
+  slug: string;
+  name: string;
+  accommodation_type: AccommodationType;
+  price_tier: AccommodationPriceTier | null;
+  address: string | null;
+  contact_name: string | null;
+  contact_phone: string | null;
+  description: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  zone_id: number | null;
+  verified: boolean;
+  status: PublicationStatus;
+  data_source: DataSource;
+  updated_at: string;
+}
+
+export interface EssentialService {
+  id: number;
+  slug: string;
+  name: string;
+  category: EssentialServiceCategory;
+  notes: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  zone_id: number | null;
+  verified: boolean;
+  status: PublicationStatus;
+  data_source: DataSource;
+  updated_at: string;
+}
+
+/** §13 Crowd Analytics (PRD §10/§26) */
+export type CrowdDensityLevel = "green" | "yellow" | "orange" | "red";
+export type CrowdEstimatedCountBand =
+  | "under_500"
+  | "500_to_2000"
+  | "2000_to_10000"
+  | "over_10000";
+export type CrowdReadingSource = "operator_entered" | "manual_estimate";
+
+export interface CrowdReading {
+  id: number;
+  zone_id: number;
+  density_level: CrowdDensityLevel;
+  estimated_count_band: CrowdEstimatedCountBand | null;
+  source: CrowdReadingSource;
+  recorded_at: string;
+  recorded_by_user_id: number | null;
+  created_at: string;
+}
+
+export interface CrowdZoneSummary {
+  zone_id: number;
+  zone_slug: string;
+  zone_name: string;
+  zone_type: string | null;
+  latest_reading: CrowdReading | null;
+  prototype_notice: string;
+}
+
+export interface CrowdZoneDetail extends CrowdZoneSummary {
+  history: CrowdReading[];
+}
+
+export interface CrowdReadingRequest {
+  density_level: CrowdDensityLevel;
+  estimated_count_band?: CrowdEstimatedCountBand | null;
+  source: CrowdReadingSource;
+  recorded_at?: string | null;
+}
+
+export interface CrowdReadingCreatedResponse {
+  reading: CrowdReading;
+  prototype_notice: string;
+}
+
+/** §14 Command Center (PRD §24) */
+export interface CommandCenterZone {
+  zone_id: number;
+  zone_slug: string;
+  zone_name: string;
+  zone_type: string | null;
+  latest_crowd_reading: CrowdReading | null;
+}
+
+export interface CommandCenterCriticalAlert {
+  id: number;
+  slug: string;
+  title: string;
+  body: string;
+  priority: AnnouncementPriority;
+  published_at: string | null;
+  expires_at: string | null;
+}
+
+export interface CommandCenterCaseTotals {
+  open_sos_incidents: number;
+  open_lost_found_cases: number;
+  open_missing_person_cases: number;
+}
+
+export interface CommandCenterObserved {
+  zones: CommandCenterZone[];
+  case_totals: CommandCenterCaseTotals;
+  case_totals_note: string;
+  critical_announcements: CommandCenterCriticalAlert[];
+}
+
+export interface CommandCenterRecommendations {
+  available: boolean;
+  items: string[];
+  note: string;
+}
+
+export type CommandCenterDecisionEntityType =
+  | "sos_incident"
+  | "lost_found_case"
+  | "missing_person_case";
+
+export interface CommandCenterDecision {
+  entity_type: CommandCenterDecisionEntityType;
+  case_reference: string;
+  status: string;
+  updated_at: string;
+}
+
+export interface CommandCenterHumanDecisions {
+  note: string;
+  recent_status_decisions: CommandCenterDecision[];
+}
+
+export interface CommandCenterOverview {
+  generated_at: string;
+  prototype_notice: string;
+  observed: CommandCenterObserved;
+  recommendations: CommandCenterRecommendations;
+  human_decisions: CommandCenterHumanDecisions;
+}
+
+/** §15 Lost & Found matching (PRD §16) — admin-only views */
+export interface LostFoundAdminCase {
+  id: number;
+  case_reference: string;
+  report_type: LostFoundReportType;
+  category: LostFoundCategory;
+  description: string;
+  location_text: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  occurred_at: string | null;
+  image_url: string | null;
+  reporter_name: string | null;
+  reporter_phone: string;
+  status: LostFoundStatus;
+  admin_notes: string | null;
+  matched_case_id: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LostFoundCandidateMatch {
+  id: number;
+  case_reference: string;
+  report_type: LostFoundReportType;
+  category: LostFoundCategory;
+  status: LostFoundStatus;
+  score: number;
+  reasons: string[];
+  created_at: string;
+}

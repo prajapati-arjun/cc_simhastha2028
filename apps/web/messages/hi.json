@@ -23,7 +23,8 @@
     "copy": "[HI-TODO] Copy",
     "copied": "[HI-TODO] Copied",
     "crowdLevelUnavailable": "[HI-TODO] Crowd level: not available",
-    "placeholderData": "[HI-TODO] Placeholder data — not verified by an authority"
+    "placeholderData": "[HI-TODO] Placeholder data — not verified by an authority",
+    "cachedLabel": "[HI-TODO] (cached copy)"
   },
   "nav": {
     "home": "[HI-TODO] Home",
@@ -34,6 +35,7 @@
     "emergency": "[HI-TODO] Emergency",
     "lostFound": "[HI-TODO] Lost & Found",
     "missingPerson": "[HI-TODO] Missing Person",
+    "planner": "[HI-TODO] Planner",
     "mainLabel": "[HI-TODO] Main navigation",
     "emergencyCta": "[HI-TODO] Emergency",
     "emergencyCtaAria": "[HI-TODO] Emergency services and SOS"
@@ -290,6 +292,63 @@
     "networkError": "[HI-TODO] We could not reach the service. Please try again in a moment.",
     "errorSummary": "[HI-TODO] Please fix the following before submitting."
   },
+  "planner": {
+    "pageTitle": "[HI-TODO] Pilgrimage Planner",
+    "pageIntro": "[HI-TODO] Enter your trip details to generate a suggested day-by-day plan across this prototype's published temples, ghats and events.",
+    "arrivalDate": "[HI-TODO] Arrival date",
+    "departureDate": "[HI-TODO] Departure date",
+    "departureBeforeArrival": "[HI-TODO] Departure date must not be earlier than the arrival date.",
+    "partySize": "[HI-TODO] Number of people",
+    "ageGroups": "[HI-TODO] Age groups (optional)",
+    "ageGroupOptions": {
+      "infant": "[HI-TODO] Infant",
+      "child": "[HI-TODO] Child",
+      "adult": "[HI-TODO] Adult",
+      "senior": "[HI-TODO] Senior"
+    },
+    "transportMode": "[HI-TODO] Transport mode",
+    "transportModeOptions": {
+      "car": "[HI-TODO] Car",
+      "bus": "[HI-TODO] Bus",
+      "train": "[HI-TODO] Train",
+      "walking": "[HI-TODO] Walking",
+      "other": "[HI-TODO] Other"
+    },
+    "accommodationPreference": "[HI-TODO] Accommodation preference",
+    "accommodationOptions": {
+      "budget": "[HI-TODO] Budget",
+      "mid_range": "[HI-TODO] Mid-range",
+      "premium": "[HI-TODO] Premium",
+      "dharamshala": "[HI-TODO] Dharamshala",
+      "not_needed": "[HI-TODO] Not needed"
+    },
+    "interests": "[HI-TODO] Interests (optional)",
+    "interestOptions": {
+      "spiritual": "[HI-TODO] Spiritual",
+      "cultural": "[HI-TODO] Cultural",
+      "historical": "[HI-TODO] Historical",
+      "family_friendly": "[HI-TODO] Family-friendly",
+      "photography": "[HI-TODO] Photography"
+    },
+    "accessibilityRequirements": "[HI-TODO] Accessibility requirements (optional)",
+    "accessibilityOptions": {
+      "wheelchair": "[HI-TODO] Wheelchair",
+      "visual_impairment": "[HI-TODO] Visual impairment",
+      "hearing_impairment": "[HI-TODO] Hearing impairment",
+      "elderly_mobility": "[HI-TODO] Elderly / limited mobility"
+    },
+    "generate": "[HI-TODO] Generate itinerary",
+    "resultTitle": "[HI-TODO] Your suggested itinerary",
+    "planAnother": "[HI-TODO] Plan another trip",
+    "dayLabel": "[HI-TODO] Day {number}",
+    "restPeriod": "[HI-TODO] No additional sites scheduled — suggested rest or personal exploration day.",
+    "temples": "[HI-TODO] Temples",
+    "ghats": "[HI-TODO] Ghats",
+    "events": "[HI-TODO] Events",
+    "unscheduledTitle": "[HI-TODO] Not included in this itinerary",
+    "unscheduledTemples": "[HI-TODO] Temples not scheduled due to trip length: {names}.",
+    "unscheduledGhats": "[HI-TODO] Ghats not scheduled due to trip length: {names}."
+  },
   "admin": {
     "loginTitle": "[HI-TODO] Admin Login",
     "username": "[HI-TODO] Username",
@@ -324,5 +383,19 @@
     "publishStateTitle": "[HI-TODO] Publication state",
     "publishStateHelp": "[HI-TODO] Records stay in Draft until you explicitly publish them. Saving never publishes on its own.",
     "counts": "[HI-TODO] Records by status"
+  },
+  "offline": {
+    "bannerOffline": "[HI-TODO] You're offline. Showing the last cached version of pages where available.",
+    "pageTitle": "[HI-TODO] You're offline",
+    "pageIntro": "[HI-TODO] This page hasn't been saved for offline use yet. Check your connection and try again — or visit a page you've already opened, such as the Emergency Directory, Temple Info, or Events, which may still work from your device's cache.",
+    "goEmergency": "[HI-TODO] Emergency Directory",
+    "goTemples": "[HI-TODO] Temple Info",
+    "goEvents": "[HI-TODO] Events",
+    "sosQueuedTitle": "[HI-TODO] SOS request queued — not yet sent",
+    "sosQueuedMessage": "[HI-TODO] You're offline, so this SOS request has been saved on your device. It will be sent automatically as soon as you're back online.",
+    "sosQueuedWaiting": "[HI-TODO] Waiting for a connection...",
+    "sosQueuedNoticeRepeat": "[HI-TODO] This is a prototype. Even once sent, this request is simulated and is not connected to live emergency dispatch.",
+    "sosFlushedTitle": "[HI-TODO] Queued SOS request sent",
+    "sosFlushedMessage": "[HI-TODO] Your device reconnected and the queued SOS request above has now been submitted."
   }
 }

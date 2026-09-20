@@ -1,0 +1,25 @@
+{
+  "name": "Simhastha 2028 — Ujjain Digital Experience Platform",
+  "short_name": "Simhastha 2028",
+  "description": "Prototype offline shell for the Simhastha 2028 Ujjain Digital Experience Platform. Demo data only — not connected to live emergency dispatch.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2f4fb0",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

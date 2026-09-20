@@ -12,14 +12,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.v1 import (
+    accommodation,
     admin,
     announcements,
     auth,
+    command_center,
+    crowd,
     emergency,
     events,
     ghats,
+    incidents,
     lost_found,
     missing_person,
+    parking,
+    planner,
     temples,
 )
 from app.core.config import settings
@@ -82,4 +88,10 @@ app.include_router(emergency.router, prefix=API_V1_PREFIX)
 app.include_router(announcements.router, prefix=API_V1_PREFIX)
 app.include_router(lost_found.router, prefix=API_V1_PREFIX)
 app.include_router(missing_person.router, prefix=API_V1_PREFIX)
+app.include_router(planner.router, prefix=API_V1_PREFIX)
+app.include_router(accommodation.router, prefix=API_V1_PREFIX)
+app.include_router(parking.router, prefix=API_V1_PREFIX)
+app.include_router(crowd.router, prefix=API_V1_PREFIX)
+app.include_router(command_center.router, prefix=API_V1_PREFIX)
+app.include_router(incidents.router, prefix=API_V1_PREFIX)
 app.include_router(admin.router, prefix=API_V1_PREFIX)

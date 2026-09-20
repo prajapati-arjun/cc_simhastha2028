@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { routing } from "@/i18n/routing";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   },
   description:
     "Sprint 1 prototype of the Simhastha 2028 Ujjain Digital Experience Platform. Demo data only — not connected to live emergency dispatch.",
+  manifest: "/manifest.json",
 };
 
 export const viewport = {
@@ -47,6 +49,7 @@ export default function LocaleLayout({
     <html lang={locale}>
       <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider>
+          <ServiceWorkerRegister />
           <SiteHeader />
           <main id="main-content" className="flex-1">
             {children}

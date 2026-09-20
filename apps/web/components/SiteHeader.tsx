@@ -19,7 +19,10 @@ const NAV_ITEMS = [
   { href: "/events", key: "events" },
   { href: "/temples", key: "temples" },
   { href: "/ghats", key: "ghats" },
+  { href: "/parking", key: "parking" },
+  { href: "/accommodation", key: "accommodation" },
   { href: "/map", key: "map" },
+  { href: "/planner", key: "planner" },
   { href: "/lost-found/report", key: "lostFound" },
   { href: "/missing-person/report", key: "missingPerson" },
 ] as const;

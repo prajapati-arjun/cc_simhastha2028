@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import DataFreshnessTimestamp from "@/components/DataFreshnessTimestamp";
+import CachedDataFreshness from "@/components/CachedDataFreshness";
 import { Breadcrumb, DetailSection } from "@/components/PageShell";
 import RetryLink from "@/components/RetryLink";
 import StatusBadge from "@/components/StatusBadge";
@@ -107,7 +107,7 @@ export default async function EventDetailPage({
         </p>
       ) : null}
 
-      <DataFreshnessTimestamp className="mt-8" updatedAt={event.updated_at} />
+      <CachedDataFreshness className="mt-8" updatedAt={event.updated_at} />
     </article>
   );
 }

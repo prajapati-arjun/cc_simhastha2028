@@ -19,7 +19,7 @@ product backlog with priorities), plus the PRD section bodies in
 | CMS | P0 | **Partial** — Events, Announcements, Temples, Ghats with a two-state draft→published stub. Full §28 five-stage workflow deferred. |
 | GIS | P0 | **Partial** — MapLibre + OSM tiles, static layer toggles. Routing, search, live layers deferred. |
 | Emergency | P0 | **Partial (simulated)** — directory, SOS record creation, lost-found and missing-person case storage with admin verification queue. No dispatch integration, no matching. |
-| Pilgrimage Planner | P1 | Not started |
+| Pilgrimage Planner | P1 | **Built (MVP, Sprint 2)** — deterministic day-by-day generator over Sprint 1 master data. Not persisted, not AI-based. |
 | Events | P1 | **Partial** — calendar + list/detail done. Search and reminders deferred. |
 | Parking | P1 | Not started |
 | Transport | P1 | Not started |
@@ -37,11 +37,14 @@ product backlog with priorities), plus the PRD section bodies in
 
 > Table 6 scope: *"Trip planner, live map, parking, transport, PWA, AI assistant"*
 
-### 2.1 Pilgrimage Planner (P1, PRD §7)
-Input: arrival/departure dates, party size, age groups, transport mode, accommodation
-preference, spiritual/cultural interests, accessibility requirements. Output: a generated
-itinerary of temples, events, ghats, rest periods, transport options and routes.
-Depends on: Sprint 1 master data; benefits from routing (2.2) and accommodation (2.5).
+### 2.1 Pilgrimage Planner (P1, PRD §7) — Built (MVP, Sprint 2)
+`POST /api/v1/planner/itinerary` (contract §10) takes arrival/departure dates, party
+size, age groups, transport mode, accommodation preference, interests and accessibility
+requirements, and returns a generated day-by-day plan of temples, ghats, events and rest
+periods drawn from Sprint 1's own published master data. Deliberately rule-based, not an
+AI/RAG feature (that is 2.7). Stateless — nothing is persisted, so there is no save/share
+link yet. Real route/transport options (2.2, 2.4) and an accommodation directory (2.5)
+remain the two biggest gaps between this and a genuinely useful planner.
 
 ### 2.2 Live map upgrade (P1, PRD §9, §11)
 Route planning (walking + vehicle modes), in-map search, accessible-route option,

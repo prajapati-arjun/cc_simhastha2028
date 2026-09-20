@@ -18,6 +18,12 @@ export function AdminNav({ user }: { user: AuthUser }) {
           <Link href="/admin" className="touch-target rounded-md px-3 text-sm font-semibold text-primary-700">
             {t("dashboard")}
           </Link>
+          <Link href="/admin/command-center" className="touch-target rounded-md px-3 text-sm font-medium text-ink-primary hover:bg-surface-bg">
+            {t("commandCenterNav")}
+          </Link>
+          <Link href="/admin/lost-found" className="touch-target rounded-md px-3 text-sm font-medium text-ink-primary hover:bg-surface-bg">
+            {t("lostFoundQueueTitle")}
+          </Link>
           {ADMIN_ENTITY_KEYS.map((key) => (
             <Link
               key={key}

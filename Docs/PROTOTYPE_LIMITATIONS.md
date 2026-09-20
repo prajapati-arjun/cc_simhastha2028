@@ -26,16 +26,20 @@ travel decisions without consulting an authoritative source.
   live conditions.
 - The application supports English and Hindi scaffolding only. Translations
   remain subject to review by qualified local-language and domain experts.
+- The pilgrimage planner (Sprint 2) generates a day-by-day plan with simple,
+  deterministic scheduling rules over this project's own seed data. It is not
+  an AI/RAG assistant, does not book or reserve anything, and does not reflect
+  real-time transport or accommodation availability. Nothing entered into it
+  is saved.
 
 ## Technical and scope limitations
 
 - The only supported deployment path is local `docker compose`; there is no
   cloud deployment, production hardening, uptime commitment, or operational
   support.
-- This sprint does not include the pilgrimage planner, parking availability,
-  transport integrations, PWA/offline support, AI/RAG assistant, Kafka,
-  OpenSearch, computer vision, volunteer/vendor platforms, command centre, or
-  digital twin.
+- This sprint does not include parking availability, transport integrations,
+  PWA/offline support, AI/RAG assistant, Kafka, OpenSearch, computer vision,
+  volunteer/vendor platforms, command centre, or digital twin.
 - Admin credentials seeded for development are not production credentials and
   must be replaced before any non-local use.
 

@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import DataFreshnessTimestamp from "@/components/DataFreshnessTimestamp";
+import CachedDataFreshness from "@/components/CachedDataFreshness";
 import { Breadcrumb, DetailSection } from "@/components/PageShell";
 import RetryLink from "@/components/RetryLink";
 import StatusBadge from "@/components/StatusBadge";
@@ -114,7 +114,7 @@ export default async function TempleDetailPage({
 
       {/* Crowd status is deliberately omitted this sprint — no crowd data source. */}
 
-      <DataFreshnessTimestamp className="mt-8" updatedAt={temple.updated_at} />
+      <CachedDataFreshness className="mt-8" updatedAt={temple.updated_at} />
     </article>
   );
 }

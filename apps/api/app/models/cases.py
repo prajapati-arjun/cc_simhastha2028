@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Integer, String, Text
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base_class import Base
@@ -48,6 +48,13 @@ class LostFoundCase(Base, TimestampMixin, PointLocationMixin):
         String(32), nullable=False, default=LostFoundStatus.SUBMITTED.value, index=True
     )
     admin_notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    #: Set only by the explicit admin confirm-match action (PRD section 16,
+    #: app/services/lost_found_matching.py) - never by the heuristic scorer on
+    #: its own. Self-referential and nullable: most cases are never matched.
+    matched_case_id: Mapped[int | None] = mapped_column(
+        ForeignKey("lost_found_cases.id", ondelete="SET NULL"), nullable=True
+    )
 
 
 @register_point_geom_sync

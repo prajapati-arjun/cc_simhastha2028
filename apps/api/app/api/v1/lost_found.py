@@ -7,16 +7,28 @@ by reporter name or phone.
 """
 from __future__ import annotations
 
+from typing import Any
+
 from fastapi import APIRouter, HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
-from app.core.deps import DbSession
+from app.core.deps import AdminUser, DbSession
 from app.core.notices import LOST_FOUND_NOTICE
 from app.models.cases import LostFoundCase
 from app.models.enums import LostFoundStatus
-from app.schemas.cases import CaseCreatedOut, LostFoundCreate, LostFoundPublicOut
+from app.schemas.cases import (
+    CaseCreatedOut,
+    LostFoundAdminOut,
+    LostFoundCandidateMatchOut,
+    LostFoundConfirmMatchRequest,
+    LostFoundCreate,
+    LostFoundPublicOut,
+)
 from app.services.audit import record_audit
+from app.services.lost_found_matching import find_candidate_matches
 from app.services.references import allocate_case_reference
+from app.services.workflow import LOST_FOUND_TRANSITIONS, apply_transition
 
 router = APIRouter(prefix="/lost-found", tags=["lost-found"])
 
@@ -117,3 +129,119 @@ def get_lost_found(case_reference: str, db: DbSession) -> LostFoundPublicOut:
         updated_at=case.updated_at,
         prototype_notice=LOST_FOUND_NOTICE,
     )
+
+
+# --------------------------------------------------------------------------
+# Candidate matching (PRD section 16) - admin only.
+#
+# Reachable only with an admin bearer token, same posture as the verification
+# queues in app/api/v1/admin.py: a heuristic score plus a free-text
+# description is far more identifying than the public status endpoint above
+# is allowed to leak.
+# --------------------------------------------------------------------------
+def _get_case_or_404(db: Session, item_id: int) -> LostFoundCase:
+    case = db.execute(
+        select(LostFoundCase).where(LostFoundCase.id == item_id)
+    ).scalar_one_or_none()
+    if case is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Case not found")
+    return case
+
+
+@router.get(
+    "/{item_id}/candidate-matches",
+    response_model=list[LostFoundCandidateMatchOut],
+    summary="Suggested opposite-type matches for a case (admin review only)",
+    description=(
+        "**Heuristic ranking, not AI/ML.** Scores opposite-type (lost<->found) "
+        "cases on category, description keyword overlap and date/location "
+        "proximity - see app/services/lost_found_matching.py. This endpoint "
+        "only surfaces candidates for a human reviewer; nothing here links or "
+        "closes a case. Use POST .../confirm-match to do that explicitly."
+    ),
+    responses={404: {"description": "No such case."}},
+)
+def get_candidate_matches(item_id: int, db: DbSession, admin: AdminUser) -> Any:
+    case = _get_case_or_404(db, item_id)
+    matches = find_candidate_matches(db, case)
+    return [
+        LostFoundCandidateMatchOut(
+            id=match.case.id,
+            case_reference=match.case.case_reference,
+            report_type=match.case.report_type,
+            category=match.case.category,
+            status=match.case.status,
+            score=match.score,
+            reasons=match.reasons,
+            created_at=match.case.created_at,
+        )
+        for match in matches
+    ]
+
+
+@router.post(
+    "/{item_id}/confirm-match",
+    response_model=LostFoundAdminOut,
+    summary="Confirm a match between two Lost & Found cases (admin only)",
+    description=(
+        "The explicit human confirmation step this project's safety scope "
+        "requires (decision record: no algorithmic match ever auto-closes or "
+        "auto-links a case). Both cases must already be `verified` - each "
+        "moves to `matched` through the same guarded transition table the "
+        "verification queue uses, so an unverified or already-closed case is "
+        "rejected with 409, not silently matched. Both cases are cross-linked "
+        "via `matched_case_id` and the confirmation is recorded in the audit "
+        "trail."
+    ),
+    responses={
+        404: {"description": "No such case, on either side of the match."},
+        409: {"description": "Invalid status transition - one of the two cases is not `verified`."},
+        422: {"description": "Attempted to match a case to itself or to a same-type case."},
+    },
+)
+def confirm_match(
+    item_id: int,
+    payload: LostFoundConfirmMatchRequest,
+    db: DbSession,
+    admin: AdminUser,
+) -> Any:
+    case = _get_case_or_404(db, item_id)
+    other = _get_case_or_404(db, payload.matched_case_id)
+
+    if other.id == case.id:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="A case cannot be matched to itself",
+        )
+    if other.report_type == case.report_type:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="A case can only be matched to an opposite-type (lost<->found) case",
+        )
+
+    for row in (case, other):
+        row.status = apply_transition(
+            LOST_FOUND_TRANSITIONS,
+            "lost_found_case",
+            row.status,
+            LostFoundStatus.MATCHED.value,
+        )
+    case.matched_case_id = other.id
+    other.matched_case_id = case.id
+    db.flush()
+
+    record_audit(
+        db,
+        action="lost_found.match_confirmed",
+        entity_type="lost_found_case",
+        entity_id=case.id,
+        actor_user_id=admin.id,
+        detail={
+            "case_reference": case.case_reference,
+            "matched_case_reference": other.case_reference,
+            "matched_case_id": other.id,
+        },
+    )
+    db.commit()
+    db.refresh(case)
+    return LostFoundAdminOut.model_validate(case)

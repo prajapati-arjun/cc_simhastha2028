@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { EmergencyServiceCard } from "@/components/Card";
-import DataFreshnessTimestamp from "@/components/DataFreshnessTimestamp";
+import CachedDataFreshness from "@/components/CachedDataFreshness";
 import { PageHeading } from "@/components/PageShell";
 import RetryLink from "@/components/RetryLink";
 import SafetyBanner from "@/components/SafetyBanner";
@@ -72,7 +72,7 @@ export default async function EmergencyPage() {
         </div>
       ) : (
         <>
-          <DataFreshnessTimestamp
+          <CachedDataFreshness
             className="mt-8"
             updatedAt={result.data.last_updated}
           />

@@ -25,7 +25,12 @@ export function DataFreshnessTimestamp({
       <time dateTime={updatedAt ?? undefined}>
         {formatted ? t("lastUpdated", { date: formatted }) : t("lastUpdatedUnknown")}
       </time>
-      {isCached ? " " : null}
+      {isCached ? (
+        <>
+          {" "}
+          <span className="font-medium text-secondary-700">{t("cachedLabel")}</span>
+        </>
+      ) : null}
     </p>
   );
 }

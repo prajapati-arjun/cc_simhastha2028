@@ -1,15 +1,32 @@
 import type {
+  Accommodation,
+  AccommodationType,
   Announcement,
   CaseSubmissionResponse,
+  CommandCenterOverview,
+  CrowdReadingCreatedResponse,
+  CrowdReadingRequest,
+  CrowdZoneDetail,
+  CrowdZoneSummary,
   EmergencyService,
+  EssentialService,
+  EssentialServiceCategory,
   EventItem,
   Ghat,
   GhatStatus,
   ListEnvelope,
+  LostFoundAdminCase,
+  LostFoundCandidateMatch,
   LostFoundCase,
   LostFoundRequest,
+  LostFoundStatus,
   MissingPersonCase,
   MissingPersonRequest,
+  ParkingAvailability,
+  ParkingFacility,
+  ParkingType,
+  PlannerRequest,
+  PlannerResponse,
   SosRequest,
   SosResponse,
   Temple,
@@ -163,6 +180,97 @@ export function getMissingPersonCase(caseReference: string) {
   );
 }
 
+export function getParkingList(params?: {
+  parking_type?: ParkingType;
+  limit?: number;
+  offset?: number;
+}) {
+  return request<ListEnvelope<ParkingFacility>>("/api/v1/parking", { params });
+}
+
+/** `{id}` accepts a numeric id or a slug, matching the ghats status convention. */
+export function getParkingAvailability(idOrSlug: string | number) {
+  return request<ParkingAvailability>(
+    `/api/v1/parking/${encodeURIComponent(String(idOrSlug))}/availability`,
+  );
+}
+
+export function getAccommodationList(params?: {
+  accommodation_type?: AccommodationType;
+  verified?: boolean;
+  limit?: number;
+  offset?: number;
+}) {
+  return request<ListEnvelope<Accommodation>>("/api/v1/accommodation", {
+    params: params && { ...params, verified: params.verified ? "true" : undefined },
+  });
+}
+
+export function getEssentialServiceList(params?: {
+  category?: EssentialServiceCategory;
+  limit?: number;
+  offset?: number;
+}) {
+  return request<ListEnvelope<EssentialService>>("/api/v1/accommodation/services", {
+    params,
+  });
+}
+
+export function getCrowdZones() {
+  return request<ListEnvelope<CrowdZoneSummary>>("/api/v1/crowd/zones");
+}
+
+export function getCrowdZone(zoneRef: string | number) {
+  return request<CrowdZoneDetail>(
+    `/api/v1/crowd/zones/${encodeURIComponent(String(zoneRef))}`,
+  );
+}
+
+export function postCrowdReading(
+  zoneRef: string | number,
+  payload: CrowdReadingRequest,
+  token: string,
+) {
+  return authedRequest<CrowdReadingCreatedResponse>(
+    `/api/v1/crowd/zones/${encodeURIComponent(String(zoneRef))}/readings`,
+    token,
+    { method: "POST", body: JSON.stringify(payload) },
+  );
+}
+
+export function getCommandCenterOverview(token: string) {
+  return authedRequest<CommandCenterOverview>("/api/v1/command-center/overview", token);
+}
+
+export function getAdminLostFoundQueue(token: string) {
+  return authedRequest<ListEnvelope<LostFoundAdminCase>>("/api/v1/admin/lost-found", token);
+}
+
+export function updateAdminLostFoundCase(
+  token: string,
+  id: number,
+  payload: { status: LostFoundStatus; admin_notes?: string | null },
+) {
+  return authedRequest<LostFoundAdminCase>(`/api/v1/admin/lost-found/${id}`, token, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getLostFoundCandidateMatches(token: string, id: number) {
+  return authedRequest<LostFoundCandidateMatch[]>(
+    `/api/v1/lost-found/${id}/candidate-matches`,
+    token,
+  );
+}
+
+export function confirmLostFoundMatch(token: string, id: number, matchedCaseId: number) {
+  return authedRequest<LostFoundAdminCase>(`/api/v1/lost-found/${id}/confirm-match`, token, {
+    method: "POST",
+    body: JSON.stringify({ matched_case_id: matchedCaseId }),
+  });
+}
+
 /* --------------------------------------------------------------- writes */
 
 export function postSos(payload: SosRequest) {
@@ -181,6 +289,14 @@ export function postLostFound(payload: LostFoundRequest) {
 
 export function postMissingPerson(payload: MissingPersonRequest) {
   return request<CaseSubmissionResponse>("/api/v1/missing-person", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+/** Stateless (contract §10) — call again to regenerate, nothing is saved server-side. */
+export function postPlannerItinerary(payload: PlannerRequest) {
+  return request<PlannerResponse>("/api/v1/planner/itinerary", {
     method: "POST",
     body: JSON.stringify(payload),
   });

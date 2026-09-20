@@ -23,17 +23,21 @@
     "copy": "Copy",
     "copied": "Copied",
     "crowdLevelUnavailable": "Crowd level: not available",
-    "placeholderData": "Placeholder data — not verified by an authority"
+    "placeholderData": "Placeholder data — not verified by an authority",
+    "cachedLabel": "(cached copy)"
   },
   "nav": {
     "home": "Home",
     "events": "Events",
     "temples": "Temples",
     "ghats": "Ghats",
+    "parking": "Parking",
+    "accommodation": "Accommodation",
     "map": "Map",
     "emergency": "Emergency",
     "lostFound": "Lost & Found",
     "missingPerson": "Missing Person",
+    "planner": "Planner",
     "mainLabel": "Main navigation",
     "emergencyCta": "Emergency",
     "emergencyCtaAria": "Emergency services and SOS"
@@ -290,6 +294,63 @@
     "networkError": "We could not reach the service. Please try again in a moment.",
     "errorSummary": "Please fix the following before submitting."
   },
+  "planner": {
+    "pageTitle": "Pilgrimage Planner",
+    "pageIntro": "Enter your trip details to generate a suggested day-by-day plan across this prototype's published temples, ghats and events.",
+    "arrivalDate": "Arrival date",
+    "departureDate": "Departure date",
+    "departureBeforeArrival": "Departure date must not be earlier than the arrival date.",
+    "partySize": "Number of people",
+    "ageGroups": "Age groups (optional)",
+    "ageGroupOptions": {
+      "infant": "Infant",
+      "child": "Child",
+      "adult": "Adult",
+      "senior": "Senior"
+    },
+    "transportMode": "Transport mode",
+    "transportModeOptions": {
+      "car": "Car",
+      "bus": "Bus",
+      "train": "Train",
+      "walking": "Walking",
+      "other": "Other"
+    },
+    "accommodationPreference": "Accommodation preference",
+    "accommodationOptions": {
+      "budget": "Budget",
+      "mid_range": "Mid-range",
+      "premium": "Premium",
+      "dharamshala": "Dharamshala",
+      "not_needed": "Not needed"
+    },
+    "interests": "Interests (optional)",
+    "interestOptions": {
+      "spiritual": "Spiritual",
+      "cultural": "Cultural",
+      "historical": "Historical",
+      "family_friendly": "Family-friendly",
+      "photography": "Photography"
+    },
+    "accessibilityRequirements": "Accessibility requirements (optional)",
+    "accessibilityOptions": {
+      "wheelchair": "Wheelchair",
+      "visual_impairment": "Visual impairment",
+      "hearing_impairment": "Hearing impairment",
+      "elderly_mobility": "Elderly / limited mobility"
+    },
+    "generate": "Generate itinerary",
+    "resultTitle": "Your suggested itinerary",
+    "planAnother": "Plan another trip",
+    "dayLabel": "Day {number}",
+    "restPeriod": "No additional sites scheduled — suggested rest or personal exploration day.",
+    "temples": "Temples",
+    "ghats": "Ghats",
+    "events": "Events",
+    "unscheduledTitle": "Not included in this itinerary",
+    "unscheduledTemples": "Temples not scheduled due to trip length: {names}.",
+    "unscheduledGhats": "Ghats not scheduled due to trip length: {names}."
+  },
   "admin": {
     "loginTitle": "Admin Login",
     "username": "Username",
@@ -311,6 +372,28 @@
     "entityAnnouncements": "Announcements",
     "entityTemples": "Temples",
     "entityGhats": "Ghats",
+    "entityParking": "Parking",
+    "entityAccommodation": "Accommodation",
+    "entityEssentialServices": "Essential Services",
+    "commandCenterNav": "Command Centre",
+    "lostFoundQueueTitle": "Lost & Found review queue",
+    "lostFoundQueueIntro": "Demo prototype — every case here lives in this project's own test database. Matching two cases always requires the explicit \"Confirm match\" action below; nothing is linked or closed automatically by the candidate scorer.",
+    "lostFoundShowDetail": "Show detail",
+    "lostFoundHideDetail": "Hide detail",
+    "lostFoundMoveTo": "Move to {label}",
+    "lostFoundReviewerNotes": "Reviewer notes",
+    "lostFoundPotentialMatches": "Potential matches",
+    "lostFoundFindMatches": "Find potential matches",
+    "lostFoundHeuristicNote": "Heuristic ranking only (category, description keywords, date/location proximity) — not AI/ML. Always review before confirming.",
+    "lostFoundNoCandidates": "No candidate matches found.",
+    "lostFoundConfirmMatch": "Confirm match",
+    "lostFoundConfirmMatchPrompt": "Confirm that \"{a}\" and \"{b}\" are the same item? Both cases will move to Matched. This cannot be undone automatically.",
+    "lostFoundMatchedWith": "matched with case #{id}",
+    "statusSubmitted": "Submitted",
+    "statusUnderReview": "Under review",
+    "statusVerified": "Verified",
+    "statusMatched": "Matched",
+    "statusRejected": "Rejected",
     "colTitle": "Title",
     "colStatus": "Status",
     "colUpdated": "Last updated",
@@ -324,5 +407,117 @@
     "publishStateTitle": "Publication state",
     "publishStateHelp": "Records stay in Draft until you explicitly publish them. Saving never publishes on its own.",
     "counts": "Records by status"
+  },
+  "parking": {
+    "pageTitle": "Parking",
+    "pageIntro": "Parking directory for bus, two-wheeler, four-wheeler and accessible parking near Simhastha venues.",
+    "filterLabel": "Filter by parking type",
+    "filterAll": "All types",
+    "type": {
+      "bus": "Bus",
+      "two_wheeler": "Two-wheeler",
+      "four_wheeler": "Four-wheeler",
+      "accessible": "Accessible"
+    },
+    "capacity": "Capacity: {count} vehicles",
+    "capacityUnknown": "Capacity not available",
+    "occupancy": "Currently occupied: {count} vehicles",
+    "occupancyUnknown": "Occupancy count not available",
+    "full": "Full",
+    "occupancyNotice": "Operator-entered count — not a live sensor or camera feed.",
+    "entry": "Entry",
+    "exit": "Exit",
+    "shuttle": "Shuttle",
+    "emptyState": "No parking facilities available."
+  },
+  "accommodation": {
+    "pageTitle": "Accommodation & Essential Services",
+    "pageIntro": "Hotels, dharamshalas, ashrams, tent camps and government accommodation, plus food services, bhandaras, drinking water, toilets and changing facilities.",
+    "accommodationSectionTitle": "Accommodation",
+    "servicesSectionTitle": "Essential services",
+    "filterLabel": "Filter by accommodation type",
+    "serviceFilterLabel": "Filter by service category",
+    "filterAll": "All types",
+    "verifiedOnlyToggle": "Verified only",
+    "verified": "Officially verified",
+    "unverified": "Not verified — third-party/commercial listing",
+    "contact": "Contact",
+    "type": {
+      "hotel": "Hotel",
+      "dharamshala": "Dharamshala",
+      "ashram": "Ashram",
+      "tent_camp": "Tent / camp",
+      "government": "Government accommodation"
+    },
+    "priceTier": {
+      "budget": "Budget",
+      "mid_range": "Mid-range",
+      "premium": "Premium"
+    },
+    "serviceCategory": {
+      "food_service": "Food service",
+      "bhandara": "Bhandara",
+      "drinking_water": "Drinking water",
+      "toilet": "Toilet",
+      "changing_facility": "Changing facility"
+    },
+    "emptyState": "No accommodation listings available.",
+    "servicesEmptyState": "No essential services available."
+  },
+  "crowd": {
+    "levelUnavailable": "Crowd level: not available",
+    "level": {
+      "green": "Low crowd",
+      "yellow": "Moderate crowd",
+      "orange": "High crowd",
+      "red": "Very high crowd"
+    }
+  },
+  "commandCenter": {
+    "title": "Command Centre",
+    "intro": "Aggregated operational overview for this pilot: crowd density bands, open safety cases and critical announcements.",
+    "observed": {
+      "title": "Observed data",
+      "intro": "Real rows read from this project's own database — operator-entered crowd readings, case totals and published announcements.",
+      "zonesTitle": "Crowd density by zone",
+      "noZones": "No zones recorded yet.",
+      "caseTotalsTitle": "Open safety cases (platform-wide)",
+      "openSos": "Open SOS reports",
+      "openLostFound": "Open Lost & Found cases",
+      "openMissingPerson": "Open Missing Person cases",
+      "criticalAlertsTitle": "Active critical announcements",
+      "noCriticalAlerts": "No active critical announcements."
+    },
+    "recommendations": {
+      "title": "Model-generated recommendations",
+      "notAvailable": "Not available in this prototype — no recommendation engine exists."
+    },
+    "humanDecisions": {
+      "title": "Human decisions",
+      "empty": "No case status decisions recorded yet.",
+      "colType": "Case type",
+      "colReference": "Reference",
+      "colStatus": "Status",
+      "colUpdated": "Last updated",
+      "entity": {
+        "sos_incident": "SOS report",
+        "lost_found_case": "Lost & Found case",
+        "missing_person_case": "Missing Person case"
+      }
+    }
+  },
+  "offline": {
+    "bannerOffline": "You're offline. Showing the last cached version of pages where available.",
+    "pageTitle": "You're offline",
+    "pageIntro": "This page hasn't been saved for offline use yet. Check your connection and try again — or visit a page you've already opened, such as the Emergency Directory, Temple Info, or Events, which may still work from your device's cache.",
+    "goEmergency": "Emergency Directory",
+    "goTemples": "Temple Info",
+    "goEvents": "Events",
+    "sosQueuedTitle": "SOS request queued — not yet sent",
+    "sosQueuedMessage": "You're offline, so this SOS request has been saved on your device. It will be sent automatically as soon as you're back online.",
+    "sosQueuedWaiting": "Waiting for a connection...",
+    "sosQueuedNoticeRepeat": "This is a prototype. Even once sent, this request is simulated and is not connected to live emergency dispatch.",
+    "sosFlushedTitle": "Queued SOS request sent",
+    "sosFlushedMessage": "Your device reconnected and the queued SOS request above has now been submitted."
   }
 }

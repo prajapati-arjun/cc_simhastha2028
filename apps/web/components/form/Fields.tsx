@@ -283,6 +283,87 @@ export function RadioGroupField({
   );
 }
 
+/** Multi-select toggle group — same visual language as RadioGroupField. */
+export function CheckboxGroupField({
+  label,
+  name,
+  required,
+  error,
+  help,
+  value,
+  onChange,
+  options,
+}: BaseFieldProps & {
+  value: string[];
+  onChange: (value: string[]) => void;
+  options: { value: string; label: string }[];
+}) {
+  const id = useId();
+  const helpId = `${id}-help`;
+  const errorId = `${id}-error`;
+
+  function toggle(optionValue: string) {
+    onChange(
+      value.includes(optionValue)
+        ? value.filter((v) => v !== optionValue)
+        : [...value, optionValue],
+    );
+  }
+
+  return (
+    <fieldset
+      aria-required={required || undefined}
+      aria-invalid={error ? true : undefined}
+      aria-describedby={describedBy(help, error, helpId, errorId)}
+    >
+      <legend className="text-sm font-semibold text-ink-primary">
+        {label}
+        {required ? (
+          <span className="text-status-danger" aria-hidden="true">
+            {" *"}
+          </span>
+        ) : null}
+      </legend>
+      {help ? (
+        <p id={helpId} className="text-xs text-ink-secondary">
+          {help}
+        </p>
+      ) : null}
+      <div className="mt-2 flex flex-wrap gap-2">
+        {options.map((option) => {
+          const checked = value.includes(option.value);
+          return (
+            <label
+              key={option.value}
+              className={[
+                "touch-target cursor-pointer gap-2 rounded-md border px-4 text-base",
+                checked
+                  ? "border-primary-500 bg-primary-50 font-semibold text-primary-700"
+                  : "border-surface-border bg-surface-bg",
+              ].join(" ")}
+            >
+              <input
+                type="checkbox"
+                name={name}
+                value={option.value}
+                checked={checked}
+                onChange={() => toggle(option.value)}
+                className="h-5 w-5"
+              />
+              {option.label}
+            </label>
+          );
+        })}
+      </div>
+      {error ? (
+        <p id={errorId} role="alert" className="mt-1 text-sm font-medium text-status-danger">
+          {error}
+        </p>
+      ) : null}
+    </fieldset>
+  );
+}
+
 /** ConsentCheckbox — explicit, required-checked control (PRD §15 / §31). */
 export function ConsentCheckbox({
   label,

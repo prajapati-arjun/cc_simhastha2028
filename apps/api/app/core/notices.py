@@ -33,3 +33,39 @@ MISSING_PERSON_NOTICE = (
 GHAT_STATUS_NOTICE = (
     "Status is seeded placeholder data — no live sensor or CCTV feed is connected."
 )
+
+PARKING_AVAILABILITY_NOTICE = (
+    "Occupancy count is operator-entered placeholder data — no live sensor, "
+    "camera or gate-counter feed is connected in this prototype."
+)
+
+CROWD_NOTICE = (
+    "Demo prototype — crowd density bands are operator-entered "
+    "observations stored in a test database, not a live sensor, CCTV or "
+    "headcount feed. Every figure is an aggregate zone-level band; no "
+    "individual is tracked, identified or counted."
+)
+
+INCIDENT_NOTICE = (
+    "Demo prototype — this incident record lives in this project's own test "
+    "database and moves through its lifecycle only by human admin action "
+    "here. Nothing is dispatched and no police, medical, fire or government "
+    "system is notified. In a real emergency contact local emergency "
+    "services directly."
+)
+
+COMMAND_CENTER_NOTICE = (
+    "Demo prototype — this command centre view aggregates this "
+    "project's own seeded and operator-entered data only. It is not "
+    "connected to live CCTV, sensor or dispatch systems, and the "
+    "\"recommendations\" section is intentionally empty because no "
+    "model-generated recommendation engine exists in this prototype."
+)
+
+PLANNER_NOTICE = (
+    "Demo prototype — this itinerary is generated from this project's own "
+    "seed data using simple, deterministic scheduling rules. It is not an AI "
+    "assistant, and not a live planning, booking or reservation system — it "
+    "does not reflect real-time crowd, transport or accommodation "
+    "availability. Nothing is saved; generate again if your plans change."
+)

@@ -420,3 +420,88 @@ lost-found / missing-person / SOS submission writes an `AuditLog` row:
 `/api/v1/admin/analytics`, WebSockets. Do not stub them as fake-data endpoints — omit
 them entirely so nothing downstream mistakes a placeholder for a feed. They are recorded
 in `docs/ROADMAP.md` instead.
+
+---
+
+## 10. Pilgrimage Planner — PRD §7 (Sprint 2 addendum)
+
+Sections 1-9 above are the frozen Sprint 1 contract and are unchanged. This section is
+appended for Sprint 2's first Phase 2 feature (`Docs/ROADMAP.md` §2.1) and is binding the
+same way.
+
+### `POST /api/v1/planner/itinerary`
+Stateless: generates and returns a plan in one call. Nothing is persisted — there is no
+GET-by-reference endpoint and no admin surface for this resource. Call again to
+regenerate after changing preferences.
+
+Request:
+```json
+{
+  "arrival_date": "2028-04-09",
+  "departure_date": "2028-04-12",
+  "party_size": 4,
+  "age_groups": ["adult", "senior"],
+  "transport_mode": "car",
+  "accommodation_preference": "budget",
+  "interests": ["spiritual"],
+  "accessibility_requirements": ["wheelchair"]
+}
+```
+`age_groups` enum: `infant | child | adult | senior` (optional, default `[]`).
+`transport_mode` enum: `car | bus | train | walking | other` (required).
+`accommodation_preference` enum: `budget | mid_range | premium | dharamshala | not_needed`
+(required).
+`interests` enum: `spiritual | cultural | historical | family_friendly | photography`
+(optional, default `[]`).
+`accessibility_requirements` enum: `wheelchair | visual_impairment | hearing_impairment |
+elderly_mobility` (optional, default `[]`).
+`party_size`: 1-200. `departure_date` must not be earlier than `arrival_date`, and the
+trip must not exceed 30 days — both reject with 422.
+
+Response `201`:
+```json
+{
+  "arrival_date": "2028-04-09",
+  "departure_date": "2028-04-12",
+  "party_size": 4,
+  "age_groups": ["adult", "senior"],
+  "transport_mode": "car",
+  "accommodation_preference": "budget",
+  "interests": ["spiritual"],
+  "accessibility_requirements": ["wheelchair"],
+  "days": [
+    {
+      "date": "2028-04-09",
+      "day_number": 1,
+      "temples": [{ "id": 1, "slug": "mahakaleshwar", "name": "Mahakaleshwar Jyotirlinga", "short_description": "..." }],
+      "ghats": [{ "id": 1, "slug": "ram-ghat", "name": "Ram Ghat" }],
+      "events": [{ "id": 1, "slug": "first-shahi-snan", "title": "First Shahi Snan", "category": "snan_parva", "starts_at": "2028-04-09T04:30:00Z", "venue_name": "Ram Ghat" }],
+      "rest_period": false
+    }
+  ],
+  "unscheduled_temples": [],
+  "unscheduled_ghats": [],
+  "transport_note": "Transport mode 'car' recorded. ...",
+  "accommodation_note": "Accommodation preference 'budget' recorded. ...",
+  "accessibility_note": "Accessibility requirements recorded: wheelchair. ...",
+  "interest_note": "Interests recorded: spiritual. ...",
+  "data_source": "generated",
+  "prototype_notice": "Demo prototype — this itinerary is generated from this project's own seed data using simple, deterministic scheduling rules. It is not an AI assistant, and not a live planning, booking or reservation system — it does not reflect real-time crowd, transport or accommodation availability. Nothing is saved; generate again if your plans change.",
+  "generated_at": "2026-09-20T10:00:00Z"
+}
+```
+
+**Scheduling rule, stated exactly so Frontend does not need to reverse-engineer it**:
+temples are assigned in `id` order, up to 3 per day; ghats up to 2 per day; any that do
+not fit within the trip length appear in `unscheduled_temples` / `unscheduled_ghats`
+instead of being dropped silently. Events keep their real calendar date and appear on
+the day they fall on, regardless of the temple/ghat rotation. A day with no temple, ghat
+or event assigned carries `"rest_period": true`. `interests` only reorders which events
+are shown first (`spiritual` → `snan_parva`/`religious`/`aarti` categories, `cultural` →
+`cultural`/`akhada`/`government` categories) — it never filters temples or ghats out, and
+`historical`/`family_friendly`/`photography` currently reorder nothing (disclosed via
+`interest_note`, not silently ignored).
+
+`accessibility_note` is present only when `accessibility_requirements` is non-empty.
+`interest_note` is present only when `interests` is non-empty. Both disclose, rather than
+imply, what the prototype can and cannot actually match.

@@ -32,11 +32,21 @@ from app.api.v1.helpers import (
     live_rows,
 )
 from app.core.deps import AdminUser, DbSession, require_admin
+from app.models.accommodation import Accommodation, EssentialService
 from app.models.cases import LostFoundCase, MissingPersonCase
 from app.models.content import Announcement, Event, Ghat, Temple
 from app.models.emergency import SosIncident
 from app.models.enums import ContentStatus, DataSource, RoleName
+from app.models.parking import ParkingFacility
 from app.models.user import User
+from app.schemas.accommodation import (
+    AccommodationCreate,
+    AccommodationOut,
+    AccommodationUpdate,
+    EssentialServiceCreate,
+    EssentialServiceOut,
+    EssentialServiceUpdate,
+)
 from app.schemas.cases import (
     CaseStatusUpdate,
     LostFoundAdminOut,
@@ -57,6 +67,7 @@ from app.schemas.content import (
     TempleOut,
     TempleUpdate,
 )
+from app.schemas.parking import ParkingCreate, ParkingOut, ParkingUpdate
 from app.services.audit import record_audit
 from app.services.workflow import (
     CONTENT_TRANSITIONS,
@@ -332,6 +343,30 @@ register_content_crud(
     out_schema=GhatOut,
     create_schema=GhatCreate,
     update_schema=GhatUpdate,
+)
+register_content_crud(
+    path="/parking",
+    model=ParkingFacility,
+    entity_type="parking_facility",
+    out_schema=ParkingOut,
+    create_schema=ParkingCreate,
+    update_schema=ParkingUpdate,
+)
+register_content_crud(
+    path="/accommodation",
+    model=Accommodation,
+    entity_type="accommodation",
+    out_schema=AccommodationOut,
+    create_schema=AccommodationCreate,
+    update_schema=AccommodationUpdate,
+)
+register_content_crud(
+    path="/essential-services",
+    model=EssentialService,
+    entity_type="essential_service",
+    out_schema=EssentialServiceOut,
+    create_schema=EssentialServiceCreate,
+    update_schema=EssentialServiceUpdate,
 )
 
 
