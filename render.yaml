@@ -1,0 +1,55 @@
+databases:
+  - name: simhastha-postgres
+    plan: free
+    databaseName: simhastha
+    user: simhastha
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: simhastha-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    healthCheckPath: /health
+    # Migrate, seed this prototype's own demo data (idempotent, see
+    # app/seed.py), then serve — no --reload in a deployed environment.
+    dockerCommand: >-
+      sh -c "python -m alembic upgrade head &&
+      python -m app.seed &&
+      uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      # This deployment IS the prototype's own demo instance, not a
+      # hardened production system (see Docs/PROTOTYPE_LIMITATIONS.md) —
+      # ENV must stay in app/seed.py's allowed set or the seed step above
+      # refuses to run and the API comes up with an empty database.
+      - key: ENV
+        value: development
+      - key: DATABASE_URL
+        fromDatabase:
+          name: simhastha-postgres
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SEED_SUPER_ADMIN_USERNAME
+        value: admin
+      - key: SEED_SUPER_ADMIN_PASSWORD
+        generateValue: true
+      - key: SEED_CONTENT_MANAGER_USERNAME
+        value: content
+      - key: SEED_CONTENT_MANAGER_PASSWORD
+        generateValue: true
+      # Placeholder — replace with the deployed Vercel URL (comma-separated
+      # if there is more than one, e.g. preview + production) after the
+      # frontend's first deploy, then trigger a manual redeploy of this
+      # service. Until then the deployed frontend's requests will be
+      # rejected by CORS.
+      - key: CORS_ORIGINS
+        value: http://localhost:3000
+
+# Not provisioned: Redis. app/core/config.py declares REDIS_URL but nothing
+# in app/ currently reads it (grep confirms zero consumers) — it's an unused
+# Phase 2+ placeholder, so a paid/limited Render Redis instance would be
+# pure waste for this deploy. Add a Render "Key Value" service and wire a
+# REDIS_URL env var here if a future feature actually needs it.
