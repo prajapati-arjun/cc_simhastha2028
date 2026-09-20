@@ -1,0 +1,27 @@
+# Simhastha 2028 API - dependencies (Sprint 1 scaffold)
+# Backend Architect: add feature-specific deps here as needed (keep pinned).
+
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.30,<0.31
+
+# DB
+sqlalchemy>=2.0,<2.1
+alembic>=1.13,<1.14
+psycopg2-binary>=2.9,<3.0
+geoalchemy2>=0.15,<0.16
+
+# Settings / validation
+pydantic>=2.7,<3.0
+pydantic-settings>=2.3,<3.0
+
+# Auth (for BE-09 admin auth/RBAC)
+python-jose[cryptography]>=3.3,<4.0
+passlib[bcrypt]>=1.7,<2.0
+python-multipart>=0.0.9,<0.1
+
+# Cache
+redis>=5.0,<6.0
+
+# Testing
+pytest>=8.2,<9.0
+httpx>=0.27,<0.28

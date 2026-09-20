@@ -1,0 +1,23 @@
+# Root .dockerignore. Each service (apps/api, apps/web) builds from its own
+# directory as the Docker build context (see infra/docker-compose.yml) and
+# has its own .dockerignore — this one only applies if an image is ever
+# built using the repo root as context.
+**/node_modules
+**/.next
+**/out
+**/__pycache__
+**/*.pyc
+**/.venv
+**/venv
+**/.pytest_cache
+**/.mypy_cache
+.git
+.gitignore
+**/.env
+**/.env.*
+!**/.env.example
+*.log
+.DS_Store
+Docs/
+project-specs/
+project-tasks/

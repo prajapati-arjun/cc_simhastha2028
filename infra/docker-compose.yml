@@ -1,0 +1,98 @@
+# Simhastha 2028 - Sprint 1 local dev stack.
+#
+# Brings up Postgres+PostGIS, Redis, FastAPI (apps/api) and Next.js
+# (apps/web) for local development only. NOT a production/cloud deployment
+# (spec decision #2: docker-compose only, no real cloud provisioning).
+#
+# Run from the repo root:
+#   docker compose --env-file .env -f infra/docker-compose.yml up --build
+# See README.md at the repo root for full instructions.
+
+name: simhastha-sprint1
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: simhastha_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-simhastha}
+      POSTGRES_USER: ${POSTGRES_USER:-simhastha}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-simhastha_dev_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-simhastha} -d ${POSTGRES_DB:-simhastha}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: simhastha_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../apps/api
+      dockerfile: Dockerfile
+    container_name: simhastha_api
+    restart: unless-stopped
+    environment:
+      APP_NAME: "Simhastha 2028 API"
+      ENV: development
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-simhastha}:${POSTGRES_PASSWORD:-simhastha_dev_password}@postgres:5432/${POSTGRES_DB:-simhastha}
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${API_SECRET_KEY:-dev-secret-change-me}
+      CORS_ORIGINS: http://localhost:3000
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind-mount source for live reload (uvicorn --reload). Python deps
+      # are installed into the image's site-packages, not /app, so the
+      # mount does not shadow them.
+      - ../apps/api:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: Dockerfile
+    container_name: simhastha_web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    ports:
+      - "3000:3000"
+    volumes:
+      # Bind-mount source for live reload (next dev). Anonymous volumes
+      # preserve the node_modules/.next installed inside the image instead
+      # of letting the host bind mount hide them.
+      - ../apps/web:/app
+      - web_node_modules:/app/node_modules
+      - web_next_cache:/app/.next
+    depends_on:
+      - api
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  web_node_modules:
+  web_next_cache:
