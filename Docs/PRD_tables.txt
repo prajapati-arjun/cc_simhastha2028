@@ -1,0 +1,88 @@
+﻿--- TABLE 1 ---
+Document Attribute | Value
+Product | Simhastha 2028 Digital Platform
+Event | Simhastha 2028, Ujjain, Madhya Pradesh
+Document Type | Product Requirements Document (PRD)
+Platform | Responsive Web Application + PWA
+Primary Users | Pilgrims, tourists, citizens, volunteers, vendors, officials
+Operational Users | Police, medical teams, administrators, departments
+Version | 1.0
+Status | Product Definition / Planning
+
+--- TABLE 2 ---
+User Type | Primary Needs
+Pilgrim | Trip planning, navigation, events, temples, ghats, safety
+Tourist | Ujjain attractions, itinerary, transport and accommodation
+Family | Safety, emergency contacts, meeting points, optional location sharing
+Senior Citizen | Simple navigation, accessibility and nearby services
+Differently Abled Visitor | Accessible routes and facilities
+Sadhu / Akhada | Events, logistics and information
+Volunteer | Tasks, shifts and incident reporting
+Vendor | Registration, location, compliance and public visibility
+Police / Security | Crowd, traffic, incidents and emergency coordination
+Medical Team | Medical incidents, facilities and resource coordination
+Administrator | Command center, analytics, alerts and reports
+
+--- TABLE 3 ---
+Priority | Meaning
+P1 | Critical â€“ immediate operational response
+P2 | High â€“ rapid response required
+P3 | Medium â€“ standard operational response
+P4 | Low â€“ routine handling
+
+--- TABLE 4 ---
+Layer | Recommended Technology
+Frontend | Next.js, React, TypeScript, Tailwind CSS
+PWA | Service Worker / Workbox or equivalent
+Maps | MapLibre / approved GIS provider
+Backend | Python + FastAPI
+Database | PostgreSQL + PostGIS
+Cache | Redis
+Streaming | Apache Kafka or managed equivalent
+Search | OpenSearch / Elasticsearch
+Object Storage | S3-compatible storage
+AI | Python, LangGraph, approved LLMs, RAG
+Computer Vision | PyTorch, OpenCV, approved detection models
+Observability | OpenTelemetry, Prometheus, Grafana
+Logging | OpenSearch/ELK or managed logging
+Infrastructure | Docker + Kubernetes or managed container platform
+Security | WAF, API Gateway, IAM, secrets manager
+
+--- TABLE 5 ---
+Requirement | Target / Direction
+Availability | Target â‰¥ 99.95%, subject to final SLA
+Critical API latency | Target < 500 ms under designed load
+Page load | Target < 3 seconds on representative networks
+Search | Target < 1 second for common queries
+Emergency alert delivery | Target < 10 seconds where infrastructure permits
+AI response | Target < 5 seconds for normal queries
+Scalability | Horizontal scaling and traffic-spike readiness
+DR | Target RTO/RPO to be finalized through government SLA
+
+--- TABLE 6 ---
+Phase | Indicative Scope
+Phase 1 â€“ Foundation | Architecture, CMS, GIS, master data, public website, core APIs
+Phase 2 â€“ Pilgrim Platform | Trip planner, live map, parking, transport, PWA, AI assistant
+Phase 3 â€“ Operations | Command center, crowd analytics, traffic, incidents, emergency
+Phase 4 â€“ Event Operations | Real-time monitoring, alerts, operational AI and analytics
+
+--- TABLE 7 ---
+Epic | Priority | Initial Deliverables
+Identity & Access | P0 | Public access, admin authentication, RBAC, MFA
+Master Data | P0 | Temples, ghats, services, zones, locations
+CMS | P0 | Events, announcements, pages, approval workflow
+GIS | P0 | Map, layers, locations, routing
+Emergency | P0 | Emergency directory, SOS, incident workflow
+Pilgrimage Planner | P1 | Itinerary and route planning
+Events | P1 | Calendar, search, reminders
+Parking | P1 | Locations and availability
+Transport | P1 | Routes and advisories
+PWA/Offline | P1 | Offline core information
+AI Assistant | P1 | RAG + structured real-time queries
+Crowd Analytics | P1 | Zone density and trends
+Command Center | P1 | Operational GIS dashboard
+Volunteer | P2 | Registration and tasks
+Vendor | P2 | Registration and verification
+Digital Twin | P3 | Simulation and predictive analytics
+
+

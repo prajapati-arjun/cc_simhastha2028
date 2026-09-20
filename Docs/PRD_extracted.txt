@@ -1,0 +1,472 @@
+﻿Product Requirements Document
+Simhastha 2028 â€“ Ujjain Digital Experience Platform
+Web Application / PWA / Digital Public Infrastructure
+
+
+
+Document Overview
+This PRD defines a proposed unified digital platform for Simhastha 2028 in Ujjain. The platform is intended to combine pilgrimage planning, spiritual and cultural information, GIS navigation, live crowd and traffic information, emergency services, lost-and-found, notifications, AI assistance, and an administrative command platform.
+1. Product Vision
+One Digital Platform for Every Pilgrim, Every Service, Every Journey.
+The platform should provide a trusted digital destination for pilgrims while also acting as a real-time operational and information layer for participating government departments.
+2. Problem Statement
+Simhastha creates a high-density, time-sensitive environment where millions of visitors may need navigation, accommodation, transportation, spiritual information, medical support, emergency assistance and reliable public announcements. The platform must reduce information fragmentation and help people make safe, informed decisions.
+3. Product Goals
+Provide a comprehensive digital pilgrimage guide.
+Provide real-time crowd, traffic, parking and route information.
+Improve access to emergency and safety services.
+Provide authoritative spiritual, cultural and event information.
+Support multilingual and accessibility-friendly experiences.
+Provide administrators with GIS-based operational visibility.
+Enable AI-assisted search and question answering grounded in authoritative data.
+Support offline access through a Progressive Web App (PWA).
+Create a single authoritative data layer for public and administrative channels.
+4. Target Users
+
+5. Product Scope
+5.1 Public Platform
+Homepage and event overview
+Simhastha calendar
+Plan Your Pilgrimage
+Live GIS map
+Temples and spiritual destinations
+Ghats and bathing information
+Events and programs
+Parking information
+Transportation information
+Accommodation directory
+Food and essential services
+Emergency services
+Lost and found
+Missing-person reporting
+Multilingual search
+AI assistant
+Notifications
+Offline-first PWA
+5.2 Administrative Platform
+Command center dashboard
+GIS operational map
+Crowd analytics
+Traffic monitoring
+Parking monitoring
+Incident management
+Emergency management
+Content management system
+Event management
+Announcement and alert management
+Volunteer management
+Vendor management
+Analytics and reporting
+Audit logs and governance
+6. Homepage Requirements
+Prominent Simhastha 2028 identity and event information.
+Primary calls to action: Plan Your Journey, Explore Map, Events, Emergency.
+Live status indicators for crowd, traffic, parking and important closures.
+Today's events and important announcements.
+Quick access to temples, ghats, transport and essential services.
+Multilingual interface selector.
+Persistent emergency access on mobile devices.
+7. Pilgrimage Planner
+Users should be able to enter:
+Arrival and departure dates
+Number of people
+Age groups
+Transport mode
+Accommodation preferences
+Spiritual/cultural interests
+Accessibility requirements
+The system should generate a personalized itinerary containing suggested temples, events, ghats, rest periods, transport options and routes.
+8. Simhastha Calendar & Events
+Snan/parva dates
+Religious programs
+Aarti schedules
+Sant/akhada programs
+Cultural programs
+Government programs
+Event venue and map location
+Event reminders
+Last-updated timestamp
+Final dates and schedules must be maintained through an authorized administrative content workflow and should not be hard-coded into the application.
+9. Live GIS Map
+Temples
+Ghats
+Parking
+Hospitals
+Police stations
+Help centers
+Toilets
+Drinking water
+Food services
+Accommodation
+Bus stops and railway access
+Emergency centers
+Crowd density
+Traffic conditions
+Road closures
+Shuttle routes
+The map should support layer controls, search, route planning, accessibility information, real-time status and mobile-friendly navigation.
+10. Crowd Management
+The platform should support aggregated crowd-density information using authorized data sources such as CCTV analytics, sensors, entry/exit counters, traffic systems and operational reports.
+Green â€“ low density
+Yellow â€“ moderate density
+Orange â€“ high density
+Red â€“ critical density
+Crowd information should be displayed with timestamps and data-source status. Individual-level tracking should not be required for basic crowd-density analytics.
+11. Smart Navigation
+Route based on crowd conditions.
+Traffic-aware routing.
+Temporary road closure awareness.
+Walking and vehicle route modes.
+Accessible-route option.
+Alternate route suggestions.
+Safety-oriented public alerts.
+12. Parking Management
+Parking location directory
+Capacity and availability
+Entry/exit information
+Parking type
+Accessible parking
+Bus and two-wheeler parking
+Shuttle connectivity
+Directions
+13. Temple & Spiritual Guide
+Mahakaleshwar
+Kal Bhairav
+Harsiddhi
+Mangalnath
+Gadkalika
+Chintaman Ganesh
+Sandipani Ashram
+84 Mahadev
+Panchkroshi Yatra
+Each destination page should contain location, significance, timings, crowd status where available, transport, accessibility, route, instructions and verified information.
+14. Panchkroshi & 84 Mahadev
+Interactive pilgrimage routes
+Temple-by-temple information
+Rest areas
+Water and medical points
+Route navigation
+Optional visit tracking
+Offline route information
+15. Emergency Services
+Police
+Ambulance
+Fire
+Medical facilities
+Women and child assistance
+Disaster management
+Help centers
+SOS workflow
+Emergency workflows must prioritize clear user consent, secure handling of location information and appropriate escalation to authorized services.
+16. Lost & Found / Missing Persons
+Lost-item reporting with category, description, image, location and time.
+Found-item reporting.
+Missing-person reporting.
+Administrative verification workflow.
+Controlled matching and case resolution.
+Audit trail for sensitive cases.
+17. Accommodation & Essential Services
+Hotels
+Dharamshalas
+Ashrams
+Tent/camp accommodation
+Government accommodation
+Food services
+Bhandaras/community kitchens
+Drinking water
+Toilets
+Changing facilities
+Listings should clearly distinguish officially verified information from third-party or commercial information.
+18. Public Transport
+Railway information
+Bus services
+Shuttle routes
+Parking-to-event shuttle
+Walking routes
+Transport advisories
+Temporary traffic arrangements
+Transport schedules should be integrated dynamically wherever authoritative APIs or approved data feeds are available.
+19. Multilingual AI Assistant
+The AI assistant should support natural-language questions in Hindi, English and other approved languages. It should use retrieval-augmented generation (RAG) for official information and real-time APIs for dynamic information.
+Example queries:
+Where is the nearest hospital?
+à¤°à¤¾à¤® à¤˜à¤¾à¤Ÿ à¤•à¥ˆà¤¸à¥‡ à¤œà¤¾à¤à¤‚?
+What events are happening today?
+Where can I park near Mahakal?
+à¤®à¥‡à¤°à¥‡ à¤ªà¤¾à¤¸ à¤ªà¥à¤²à¤¿à¤¸ à¤¸à¥à¤Ÿà¥‡à¤¶à¤¨ à¤•à¤¹à¤¾à¤ à¤¹à¥ˆ?
+AI responses should display source/authority and last-updated information where appropriate. The assistant must not invent real-time crowd, traffic, emergency or event information.
+20. Notifications
+Emergency alerts
+Traffic alerts
+Crowd alerts
+Parking alerts
+Event reminders
+Temple/service updates
+Personalized itinerary notifications
+Users should be able to configure notification categories. Critical public safety alerts may follow authorized emergency communication policies.
+21. Family Safety
+Family group creation
+Shared meeting points
+Emergency contacts
+Optional location sharing
+QR-based family identification where approved
+Location sharing should be explicit, purpose-specific and time-limited wherever possible.
+22. Volunteer Platform
+Volunteer registration
+Zone assignment
+Shift management
+Task management
+Incident reporting
+Attendance
+Announcements
+23. Vendor Management
+Vendor registration
+Business details
+License/compliance documents
+Location
+Operating hours
+Public listing
+QR-based verification
+Complaint workflow
+24. Administrative Command Center
+Live operational dashboard
+Zone-wise crowd information
+Traffic status
+Parking status
+Incidents
+Medical incidents
+Missing-person cases
+Infrastructure issues
+Active alerts
+GIS layers
+Reports
+The command center should provide actionable operational context while preserving a clear distinction between observed data, model-generated recommendations and human decisions.
+25. Incident Management
+Incident detected or reported
+Classification
+Priority assignment
+Department/zone assignment
+Response
+Escalation if SLA is breached
+Resolution
+Post-incident report
+
+26. CCTV / AI Analytics
+Crowd-density estimation
+Queue estimation
+Vehicle counting
+Traffic monitoring
+Restricted-zone detection
+Abandoned-object detection where legally authorized
+Biometric identification or facial recognition should not be treated as a default requirement. Any biometric processing must have explicit legal authority, a defined purpose, strong governance, access controls and retention limits.
+27. AI / RAG Architecture
+The AI platform should combine a knowledge base, retrieval, structured APIs, language models, computer-vision analytics and an orchestration layer.
+Official knowledge base
+Hybrid/semantic search
+RAG
+LLM orchestration
+Structured real-time APIs
+Crowd/traffic analytics
+Model monitoring
+Human oversight
+28. Content Management System
+Events
+Temples
+Ghats
+Routes
+Parking
+Accommodation
+Announcements
+Emergency alerts
+FAQs
+Documents
+Publishing workflow:
+Draft
+Department review
+Verification
+Approval
+Publication
+29. Roles & RBAC
+Super Admin
+Department Admin
+Zone Admin
+Police/Security Admin
+Medical Admin
+Content Manager
+Volunteer
+Vendor
+Public User
+Role-based access control must follow least privilege, separation of duties and auditable authorization decisions.
+30. Security Requirements
+OAuth2/OIDC where applicable
+MFA for privileged users
+Secure OTP authentication for public accounts
+API gateway
+WAF and DDoS protection
+Rate limiting
+Input validation
+Secure secret management
+Encryption in transit and at rest
+Audit logging
+Session management
+Vulnerability and dependency scanning
+31. Privacy Requirements
+Data minimization
+Purpose limitation
+Explicit consent for optional location sharing
+Encryption for sensitive information
+Role-based access
+Defined retention periods
+Secure deletion
+Privacy notices
+Auditability
+The implementation should be aligned with applicable Indian data-protection, cybersecurity and government information-security requirements.
+32. Accessibility
+WCAG-oriented design
+Keyboard navigation
+Screen-reader support
+High contrast
+Large touch targets
+Senior-friendly flows
+Voice-friendly search
+Accessible route information
+Multilingual content
+33. Offline-First PWA
+Offline emergency contacts
+Offline temple information
+Cached maps/routes where licensing permits
+Offline FAQs
+Cached event information
+Sync queue for selected user actions
+Offline data should display its freshness timestamp so users can distinguish cached information from live information.
+34. Recommended Technology Stack
+
+35. High-Level Architecture
+Public web and PWA clients should access a controlled API gateway. Backend services should separate authentication, content, GIS, events, emergency, incident and real-time capabilities. A shared data platform should support both public and administrative applications.
+CDN
+WAF / Load Balancer
+API Gateway
+FastAPI services
+WebSocket service
+PostgreSQL/PostGIS
+Redis
+Kafka/event bus
+AI/analytics services
+Object storage
+36. Core Data Entities
+User, Role, Permission
+Temple, Ghat, Parking, Hospital, PoliceStation, HelpCenter
+Event, SnanEvent, Akhada
+Route, Road, Zone
+CrowdReading, TrafficReading, ParkingReading
+Incident, Emergency, MissingPerson, LostFound
+Accommodation, Vendor, Volunteer
+Notification, Announcement
+AIConversation, KnowledgeDocument
+AuditLog
+37. API Requirements
+Representative public APIs:
+GET /api/v1/events
+GET /api/v1/temples
+GET /api/v1/ghats/{id}/status
+GET /api/v1/parking/{id}/availability
+GET /api/v1/crowd/zones
+GET /api/v1/traffic/status
+GET /api/v1/emergency/services
+POST /api/v1/lost-found
+POST /api/v1/missing-person
+POST /api/v1/ai/chat
+Representative administrative APIs:
+POST /api/v1/admin/events
+PATCH /api/v1/admin/events/{id}
+POST /api/v1/admin/alerts
+POST /api/v1/admin/incidents
+GET /api/v1/admin/dashboard
+GET /api/v1/admin/analytics
+38. Real-Time Data Architecture
+Authorized CCTV, IoT and departmental systems should publish events through a streaming layer. Stream processing should update operational stores and push selected real-time information to public clients through controlled APIs/WebSockets.
+39. Analytics
+Visitor estimates
+Zone-wise crowd trends
+Traffic flow
+Parking utilization
+Medical incidents
+Emergency incidents
+Lost/found statistics
+Infrastructure reports
+Service utilization
+40. Non-Functional Requirements
+
+41. Disaster Recovery & Business Continuity
+Multi-zone deployment
+Automated backups
+Database replication
+Disaster-recovery environment
+Backup restoration testing
+Incident response runbooks
+Operational failover procedures
+42. Monitoring & Observability
+API latency
+HTTP error rate
+CPU and memory
+Database health
+Redis health
+Kafka lag
+WebSocket connections
+AI latency and failure rate
+CCTV/analytics pipeline health
+Notification delivery
+43. AI Governance
+Model registry and versioning
+Evaluation datasets
+Security testing
+Bias and quality evaluation where relevant
+Prompt/version management
+Human oversight
+Model monitoring
+Audit trails
+Clear distinction between factual source data and AI-generated recommendations
+44. Phased Delivery Roadmap
+
+45. MVP Definition
+Public MVP:
+Homepage
+Calendar
+Temples
+Ghats
+Live map
+Parking
+Events
+Transport
+Emergency
+Lost & Found
+Multilingual support
+Search
+PWA
+Administrative MVP:
+Authentication and RBAC
+CMS
+Event management
+Temple/location management
+Announcement management
+GIS dashboard
+Incident management
+Basic analytics
+46. Future Digital Twin
+A future Ujjain Simhastha Digital Twin can combine GIS, crowd, traffic, parking, infrastructure and operational data to simulate scenarios such as increased crowd density in a specific zone. Simulation outputs should support, not replace, authorized human operational decisions.
+47. Success Criteria
+A pilgrim can discover Simhastha information without visiting multiple unrelated portals.
+A pilgrim can plan a trip and navigate to verified destinations.
+Users can find emergency and essential services quickly.
+The public platform can publish verified real-time operational information.
+Administrators can view operational status on a unified GIS dashboard.
+Critical incidents have defined escalation and audit workflows.
+The platform remains usable under severe traffic spikes.
+AI answers are grounded in authoritative sources and current APIs.
+Privacy and security controls are auditable.
+48. Key Product Principle
+The platform should not be treated as a conventional tourism website. It should be designed as Digital Public Infrastructure + Pilgrimage Platform + GIS System + Emergency/Safety Platform + Real-Time Operations Platform + AI Assistant.
+A single authoritative Simhastha data layer/API should be established from the beginning so that the website, PWA, mobile application, command center and AI assistant consume consistent information. This reduces the risk of conflicting public information across channels.
+49. Initial Product Backlog
+
+
