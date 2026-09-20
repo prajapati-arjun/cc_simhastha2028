@@ -28,6 +28,9 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Office lock files
+~$*
+
 # Docker
 *.pid
 

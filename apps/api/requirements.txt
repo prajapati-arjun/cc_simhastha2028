@@ -17,6 +17,12 @@ pydantic-settings>=2.3,<3.0
 # Auth (for BE-09 admin auth/RBAC)
 python-jose[cryptography]>=3.3,<4.0
 passlib[bcrypt]>=1.7,<2.0
+# Pinned below 4.1 deliberately. passlib 1.7.4 probes the backend with an
+# over-length secret at import time; bcrypt >= 4.1 raises ValueError on that
+# probe instead of truncating, so every password hash fails with
+# "password cannot be longer than 72 bytes". Unpin only when passlib ships a
+# release that knows about the newer backend.
+bcrypt>=4.0,<4.1
 python-multipart>=0.0.9,<0.1
 
 # Cache

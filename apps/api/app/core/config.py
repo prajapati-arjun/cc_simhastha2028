@@ -31,6 +31,24 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "dev-secret-change-me"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
+    JWT_ALGORITHM: str = "HS256"
+
+    # Connection pool sizing for the API container.
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 10
+
+    # Pagination defaults/ceilings for every list endpoint.
+    DEFAULT_PAGE_LIMIT: int = 50
+    MAX_PAGE_LIMIT: int = 200
+
+    # Credentials created by `python -m app.seed`. Development only: the seed
+    # script refuses to run when ENV is not a development/test environment, so
+    # these values cannot silently become production logins.
+    SEED_SUPER_ADMIN_USERNAME: str = "admin"
+    SEED_SUPER_ADMIN_PASSWORD: str = "Simhastha@2028"
+    SEED_CONTENT_MANAGER_USERNAME: str = "content"
+    SEED_CONTENT_MANAGER_PASSWORD: str = "Content@2028"
+
     # Comma-separated list of allowed origins for CORS.
     CORS_ORIGINS: str = "http://localhost:3000"
 

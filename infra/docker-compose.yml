@@ -89,7 +89,10 @@ services:
       - web_next_cache:/app/.next
     depends_on:
       - api
-    command: npm run dev
+    # `web_node_modules` is a named Linux volume. `npm install` reconciles it
+    # from package.json on startup, so a newly-added frontend dependency cannot
+    # leave the web container crash-looping with a stale volume.
+    command: sh -c "npm install && npm run dev"
 
 volumes:
   postgres_data:
